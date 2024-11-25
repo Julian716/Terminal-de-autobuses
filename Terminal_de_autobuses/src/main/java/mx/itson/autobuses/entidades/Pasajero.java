@@ -17,6 +17,15 @@ public class Pasajero {
     private double precio;
     private int asiento;
 
+     /**
+     * Constructor para crear un pasajero.
+     *
+     * @param nombre Nombre del pasajero.
+     * @param origen Terminal de origen.
+     * @param destino Terminal de destino.
+     * @param precio Precio del boleto.
+     * @param asiento Número de asiento asignado.
+     */
     public Pasajero(String nombre, String origen, String destino, double precio, int asiento) {
         this.nombre = nombre;
         this.origen = origen;

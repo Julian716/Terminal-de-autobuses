@@ -5,22 +5,37 @@
 package mx.itson.autobuses.ui;
 
 /**
- *
+ * Clase principal que simula la operación de un autobús recorriendo diferentes terminales,
+ * realizando la venta de boletos, la bajada de pasajeros en cada terminal, y la generación
+ * de un reporte final del viaje.
+ * 
  * @author alex
  */
 import java.util.Scanner;
 import mx.itson.autobuses.terminal.Terminales;
 import mx.itson.autobuses.entidades.Autobus;
 
+/**
+     * Método principal que simula el recorrido del autobús entre las terminales, maneja la
+     * venta de boletos y la bajada de pasajeros en cada terminal, hasta llegar a la última terminal.
+     * 
+     * @param args Argumentos de la línea de comandos, no utilizados en este caso.
+     */
 public class Main {
     public static void main(String[] args) {
+        // Crear una instancia del autobús
         Autobus autobus = new Autobus();
+        // Crear un objeto Scanner para leer entradas del usuario
         Scanner sc = new Scanner(System.in);
 
+        // Iterar sobre todas las terminales excepto la última
         for (int i = 0; i < Terminales.TERMINALES.length - 1; i++) {
+            // Obtener la terminal actual
             String terminalActual = Terminales.TERMINALES[i];
             System.out.println("\nLlegando a terminal: " + terminalActual);
+            // Marcar la terminal actual como visitada
             autobus.agregarTerminalVisitada(terminalActual);
+            // Mostrar el estado de los asientos disponibles
             autobus.mostrarAsientos();
 
             // Bajada de pasajeros

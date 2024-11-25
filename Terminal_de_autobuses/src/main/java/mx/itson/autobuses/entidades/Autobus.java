@@ -10,9 +10,11 @@ import java.util.HashSet;
 import java.text.Normalizer;
     
 /**
- * @author alex
+ * 
  * Representa un autobús que realiza un viaje entre varias terminales.
  * Permite la venta de boletos, gestión de asientos, y generación de reportes finales.
+ * 
+ * @author alex
  */
 public class Autobus {
     private static final int TOTAL_ASIENTOS = 20;
@@ -35,12 +37,21 @@ public class Autobus {
         inicializarAsientos(); // Todos los asientos comienzan como disponibles
     }
 
+    /**
+     *Inicializa todos los asientos del autobús como disponibles (true).
+     *Se utiliza al crear un objeto de la clase Autobus para garantizar que todos los asientos comiencen libres.
+     */
     private void inicializarAsientos() {
         for (int i = 0; i < TOTAL_ASIENTOS; i++) {
             asientosDisponibles[i] = true;
         }
     }
 
+    /**
+     *Agrega una terminal visitada a un conjunto (HashSet) de terminales ya visitadas.
+     * @param terminal 
+     * Asegura que las terminales visitadas no sean seleccionadas como destinos válidos para nuevos pasajeros.
+     */
     public void agregarTerminalVisitada(String terminal) {
         terminalesVisitadas.add(terminal);
     }
@@ -76,7 +87,12 @@ public void mostrarAsientos() {
     System.out.println();
 }
 
-
+    /**
+     *Gestiona la bajada de pasajeros en una terminal específica. Marca los asientos de estos pasajeros como disponibles y los registra en una lista de pasajeros que se bajaron.
+     * @param terminalActual Nombre de la terminal donde se bajarán los pasajeros.
+     * @return El número de pasajeros que se bajaron en esa terminal.
+     * Se utiliza en cada parada para actualizar el estado del autobús.
+     */
     public int bajarPasajeros(String terminalActual) {
         int pasajerosQueBajan = 0;
         ArrayList<Pasajero> pasajerosABajar = new ArrayList<>();
@@ -92,6 +108,12 @@ public void mostrarAsientos() {
         return pasajerosQueBajan;
     }
 
+    /**
+     *Permite vender un boleto a un pasajero, registrando su información (nombre, destino, precio y número de asiento) y marcando el asiento como ocupado.
+     * @param sc Objeto Scanner para leer la entrada del usuario.
+     * @param origen Nombre de la terminal actual (origen del pasajero).
+     * Gestiona la venta de boletos asegurando que los destinos sean válidos y los asientos estén disponibles.
+     */
     public void venderBoleto(Scanner sc, String origen) {
     System.out.print("Nombre del pasajero: ");
     String nombre = sc.nextLine();
@@ -142,9 +164,13 @@ public void mostrarAsientos() {
     System.out.println("Boleto vendido con éxito a " + nombre);
 }
 
-
-    
-
+/**
+ *Verifica si un destino ingresado por el usuario es válido. Un destino es válido si no ha sido visitado aún, no es igual al origen, y está en la lista de terminales.
+ * @param destino Nombre de la terminal destino.
+ * @param origen Nombre de la terminal origen.
+ * @return true si el destino es válido; de lo contrario, false.
+ * Valida los destinos ingresados durante la venta de boletos.
+ */
 private boolean esDestinoValido(String destino, String origen) {
     destino = normalizarTexto(destino);
     origen = normalizarTexto(origen);
@@ -158,16 +184,25 @@ private boolean esDestinoValido(String destino, String origen) {
     return false;
 }
 
-// Método para normalizar texto (elimina acentos y pasa a minúsculas)
+/**
+ *Elimina acentos y convierte un texto a minúsculas para una comparación más consistente y precisa.
+ * @param texto El texto a normalizar.
+ * @return El texto normalizado.
+ * Facilita la comparación de nombres de terminales y destinos.
+ */
 private String normalizarTexto(String texto) {
     texto = Normalizer.normalize(texto, Normalizer.Form.NFD); // Normaliza eliminando caracteres especiales
     texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", ""); // Remueve acentos
     return texto.toLowerCase(); // Convierte a minúsculas
 }
 
-
     /**
-     * Genera y muestra un reporte final del viaje con la lista de pasajeros y las ganancias.
+     *Genera y muestra un reporte final del viaje. Incluye:
+     *Pasajeros que permanecen en el autobús, con su nombre, origen, destino, precio y asiento.
+     * Pasajeros que se bajaron en terminales previas.
+     * La ganancia total del viaje.
+     * 
+     * Se llama al finalizar el viaje para mostrar un resumen completo.
      */
      public void mostrarReporteFinal() {
         System.out.println("\n--- Reporte Final del Viaje ---");
